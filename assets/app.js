@@ -71,6 +71,10 @@ function enhanceCodeBlocks(){
   });
 }
 
+<div class="tags">
+  <a class="tag" href="?tag=design">design</a>
+  <a class="tag" href="?tag=app">app</a>
+</div>
 /* ---------- boot ---------- */
 if (location.pathname.endsWith("post.html")){
   mountPost();
