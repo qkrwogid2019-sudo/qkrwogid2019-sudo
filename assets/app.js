@@ -2,15 +2,12 @@ const $ = (s) => document.querySelector(s);
 
 /* ---------- utils ---------- */
 async function fetchJSON(url){
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error("JSON load fail");
-  return res.json();
+  const r = await fetch(url, { cache: "no-store" });
+  return r.json();
 }
-
 async function fetchText(url){
-  const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error("HTML load fail");
-  return res.text();
+  const r = await fetch(url, { cache: "no-store" });
+  return r.text();
 }
 
 /* ---------- index ---------- */
@@ -19,13 +16,46 @@ async function mountIndex(){
 
   const posts = await fetchJSON("posts/posts.json");
   const container = $("#posts");
+  const search = $("#search");
 
-  container.innerHTML = posts.map(p => `
-    <a class="post-link" href="post.html?slug=${p.slug}">
-      <h2>${p.title}</h2>
-      <p>${p.summary}</p>
-    </a>
-  `).join("");
+  function render(list){
+    container.innerHTML = list.map(p => {
+      const tags = (p.tags || [])
+        .map(t => `<span class="tag">${t}</span>`).join("");
+
+      return `
+        <a class="post-link" href="post.html?slug=${p.slug}">
+          <h2>${p.title}</h2>
+          <p>${p.summary}</p>
+          <div class="tags">${tags}</div>
+        </a>
+      `;
+    }).join("");
+  }
+
+  render(posts);
+
+  search.addEventListener("input", e => {
+    const q = e.target.value.toLowerCase();
+    render(posts.filter(p =>
+      p.title.toLowerCase().includes(q) ||
+      p.summary.toLowerCase().includes(q)
+    ));
+  });
+
+  $("#tab-posts").onclick = () => {
+    $("#posts").classList.remove("hidden");
+    $("#apps").classList.add("hidden");
+    $("#tab-posts").classList.add("active");
+    $("#tab-app").classList.remove("active");
+  };
+
+  $("#tab-app").onclick = () => {
+    $("#posts").classList.add("hidden");
+    $("#apps").classList.remove("hidden");
+    $("#tab-app").classList.add("active");
+    $("#tab-posts").classList.remove("active");
+  };
 }
 
 /* ---------- post ---------- */
@@ -36,48 +66,16 @@ async function mountPost(){
   const posts = await fetchJSON("posts/posts.json");
   const post = posts.find(p => p.slug === slug);
 
-  if (!post){
-    $("#content").innerHTML = "<p>글을 찾을 수 없음</p>";
-    return;
-  }
-
   $("#title").textContent = post.title;
+  $("#content").innerHTML = await fetchText(`posts/${post.file}`);
 
-  const html = await fetchText(`posts/${post.file}`);
-  $("#content").innerHTML = html;
-
-  enhanceCodeBlocks();
-}
-
-/* ---------- code ---------- */
-function enhanceCodeBlocks(){
   if (window.hljs) hljs.highlightAll();
-
-  document.querySelectorAll("pre code").forEach(code => {
-    const pre = code.parentElement;
-    if (pre.querySelector(".copy-btn")) return;
-
-    const btn = document.createElement("button");
-    btn.className = "copy-btn";
-    btn.textContent = "Copy";
-
-    btn.onclick = async () => {
-      await navigator.clipboard.writeText(code.innerText);
-      btn.textContent = "Copied";
-      setTimeout(() => btn.textContent = "Copy", 1000);
-    };
-
-    pre.appendChild(btn);
-  });
 }
 
-<div class="tags">
-  <a class="tag" href="?tag=design">design</a>
-  <a class="tag" href="?tag=app">app</a>
-</div>
 /* ---------- boot ---------- */
 if (location.pathname.endsWith("post.html")){
   mountPost();
 } else {
   mountIndex();
 }
+
