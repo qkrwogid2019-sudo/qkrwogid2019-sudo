@@ -1,182 +1,73 @@
-/* ===============================
-   Design System
-=============================== */
 :root{
-  --bg: #f6e9ff;
-  --dot: rgba(160, 90, 200, 0.25);
-  --ink: #1c1c1c;
-  --primary: #3b2bd6;
-  --card: #ffffff;
-  --line: #3b2bd6;
-  --radius: 14px;
+  --bg:#f6e9ff;
+  --dot:rgba(160,90,200,.25);
+  --ink:#1c1c1c;
+  --primary:#3b2bd6;
+  --card:#fff;
+  --line:#3b2bd6;
+  --radius:14px;
 }
-
-*{ box-sizing: border-box; }
 
 body{
   margin:0;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-  color: var(--ink);
+  font-family:Inter,sans-serif;
   background:
-    radial-gradient(var(--dot) 1.2px, transparent 1.2px),
+    radial-gradient(var(--dot) 1.2px,transparent 1.2px),
     var(--bg);
-  background-size: 16px 16px;
-}
-
-/* ===============================
-   Layout
-=============================== */
-.container{
-  width: min(860px, 92%);
-  margin: 0 auto;
-  padding: 24px 0 64px;
-}
-
-/* ===============================
-   Header
-=============================== */
-.site-header{
-  background: var(--primary);
-  color: #fff;
-  padding: 18px 24px;
-  border-radius: var(--radius);
-  margin-bottom: 28px;
-  display:flex;
-  align-items:center;
-  justify-content: space-between;
-}
-
-.brand{
-  font-family: "DotGothic16", monospace;
-  font-size: 28px;
-  letter-spacing: 1px;
-}
-
-.header-icon{
-  width:32px;
-  height:32px;
-  border-radius:50%;
-  background:#fff;
-  opacity:.9;
-}
-
-/* ===============================
-   Top Nav (Posts / App)
-=============================== */
-.top-nav{
-  display:flex;
-  gap:12px;
-  margin-bottom:28px;
-}
-
-.top-nav button{
-  flex:1;
-  padding:14px 0;
-  border-radius: var(--radius);
-  border:2px solid var(--line);
-  background: var(--card);
-  font-size:18px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.top-nav button.active{
-  background: var(--primary);
-  color:#fff;
-}
-
-/* ===============================
-   Search
-=============================== */
-.search{
-  margin-bottom:20px;
-}
-
-.search input{
-  width:100%;
-  padding:14px 16px;
-  border-radius: var(--radius);
-  border:2px solid var(--line);
-  font-size:16px;
-}
-
-/* ===============================
-   Post Card
-=============================== */
-.post-link{
-  display:block;
-  background: var(--card);
-  border:2px solid var(--line);
-  border-radius: var(--radius);
-  padding:20px;
-  margin-bottom:18px;
-  text-decoration:none;
-  color:inherit;
-}
-
-.post-link h2{
-  margin:0 0 8px;
-  font-size:22px;
-}
-
-.post-link p{
-  margin:0;
-  opacity:.85;
-}
-
-/* ===============================
-   Tags
-=============================== */
-.tags{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  margin-top:12px;
-}
-
-.tag{
-  border:2px solid var(--line);
-  padding:6px 12px;
-  border-radius:999px;
-  font-size:13px;
-  background:#fff;
-  text-decoration:none;
+  background-size:16px 16px;
   color:var(--ink);
 }
 
-/* ===============================
-   Post Page
-=============================== */
-article h1{
-  font-size:32px;
-  margin-bottom:12px;
+.container{width:min(860px,92%);margin:auto;padding:24px 0;}
+
+.site-header{
+  background:var(--primary);
+  color:#fff;
+  padding:18px 24px;
+  border-radius:var(--radius);
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:24px;
 }
+
+.brand{font-family:DotGothic16;font-size:28px}
+
+.top-nav{display:flex;gap:12px;margin-bottom:20px}
+.top-nav button{
+  flex:1;padding:14px;border:2px solid var(--line);
+  background:#fff;border-radius:var(--radius);
+  font-weight:600;cursor:pointer;
+}
+.top-nav .active{background:var(--primary);color:#fff}
+
+.search input{
+  width:100%;padding:14px;border-radius:var(--radius);
+  border:2px solid var(--line);margin-bottom:20px;
+}
+
+.post-link{
+  display:block;padding:20px;margin-bottom:18px;
+  background:#fff;border:2px solid var(--line);
+  border-radius:var(--radius);color:inherit;text-decoration:none;
+}
+
+.tags{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+.tag{
+  padding:6px 12px;border-radius:999px;
+  border:2px solid var(--line);font-size:13px;
+}
+
+.hidden{display:none}
 
 article{
-  background: var(--card);
-  border:2px solid var(--line);
-  border-radius: var(--radius);
-  padding:32px;
+  background:#fff;border:2px solid var(--line);
+  border-radius:var(--radius);padding:32px;
 }
 
-/* ===============================
-   Code
-=============================== */
 pre{
-  background:#0f0f1a;
-  color:#fff;
-  padding:18px;
-  border-radius:12px;
-  overflow:auto;
+  background:#111;color:#fff;
+  padding:18px;border-radius:12px;
 }
 
-/* ===============================
-   Footer
-=============================== */
-.footer{
-  margin-top:48px;
-  text-align:center;
-  font-size:14px;
-  opacity:.6;
-}
+.footer{text-align:center;margin-top:48px;opacity:.6}
 
