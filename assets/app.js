@@ -131,6 +131,7 @@ async function mountPost(posts){
   }
   const html = await res.text();
   $("#content").innerHTML = html;
+  enhanceCodeBlocks();
 }
 
 /* ---------- bootstrap ---------- */
@@ -155,3 +156,37 @@ async function mountPost(posts){
   }
 })();
 
+function enhanceCodeBlocks(){
+  // syntax highlight
+  if (window.hljs){
+    hljs.highlightAll();
+  }
+
+  document.querySelectorAll("pre code").forEach(code => {
+    const pre = code.parentElement;
+
+    // 이미 버튼 있으면 스킵
+    if (pre.querySelector(".copy-btn")) return;
+
+    const btn = document.createElement("button");
+    btn.className = "copy-btn";
+    btn.textContent = "Copy";
+
+    btn.addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(code.innerText);
+        btn.textContent = "Copied";
+        btn.classList.add("copied");
+
+        setTimeout(() => {
+          btn.textContent = "Copy";
+          btn.classList.remove("copied");
+        }, 1200);
+      }catch(e){
+        btn.textContent = "Failed";
+      }
+    });
+
+    pre.appendChild(btn);
+  });
+}
