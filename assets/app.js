@@ -1,3 +1,6 @@
+const BASE = location.pathname.includes("/post.html")
+  ? ".."
+  : ".";
 const $ = (s) => document.querySelector(s);
 
 /* ---------- utils ---------- */
