@@ -1,0 +1,68 @@
+<section class="post-body">
+
+  <h1>정적 블로그를 만들다가 배운 것들 — 캐시, URL, 그리고 DOM</h1>
+  <p>
+    왜 아무 에러도 안 나는데 화면은 비어 있었을까?
+  </p>
+
+  <section>
+    <h2>오늘의 삽질 하이라이트</h2>
+
+    <h3>왜 console.log 하나로 문제가 해결됐을까?</h3>
+
+    <blockquote>
+      문제는 코드가 아니라 캐시였다.
+    </blockquote>
+
+    <p>
+      정적 사이트에서
+      <code>&lt;script src="assets/app.js"&gt;</code>로 불러오는 JS는
+      브라우저가 마음대로 캐싱한다.
+    </p>
+
+    <p>
+      <code>fetch(..., { cache: "no-store" })</code>는
+      fetch 요청에만 적용되며,
+      script 로딩에는 영향을 주지 않는다.
+    </p>
+
+    <p>
+      즉,
+      <code>console.log()</code>를 추가한 순간
+      JS 파일 내용이 바뀌면서
+      브라우저가 캐시를 버리고 새 파일을 다시 가져온 것이다.
+    </p>
+  </section>
+
+  <section>
+    <h2>진짜 원인</h2>
+    <p>
+      <code>opacity: 0</code>은 요소를 보이지 않게 할 뿐,
+      DOM과 레이아웃에서는 제거되지 않는다.
+    </p>
+  </section>
+
+  <section>
+    <h2>해결 방법</h2>
+    <ul>
+      <li>하드 리프레시: <strong>Cmd + Shift + R</strong></li>
+      <li>script 버전 쿼리 추가: <code>app.js?v=20241226</code></li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>배운 점</h2>
+    <ul>
+      <li>
+        정적 사이트는 단순하지만,
+        단순해서 더 정확해야 한다.
+      </li>
+    </ul>
+  </section>
+
+  <p class="post-note">
+    이 글은 실제 삽질 과정을 그대로 기록한 복기 노트다.<br>
+    오늘 이거 잡느라 1시간 날림.
+  </p>
+
+</section>
