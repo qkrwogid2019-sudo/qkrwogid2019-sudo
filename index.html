@@ -13,85 +13,63 @@
     rel="stylesheet"
   >
 
-  <!-- Styles -->
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
 
- <!-- Header -->
+<!-- Header -->
 <header class="site-header">
   <span class="brand">T E C H P O S T</span>
 </header>
 
-<!-- 페이지 전체 기준 왼쪽 -->
-<div class="more-posts global">
-  <a href="post.html" class="all-posts-link">
+<!-- 페이지 기준 왼쪽 : 아카이브 트리거 -->
+<div class="archive-trigger">
+  <a href="#" id="allPostsBtn" class="all-posts-link">
     모든 포스트 보기 →
   </a>
 </div>
 
 <main class="container">
 
-    <!-- Tabs (페이지 이동 방식) -->
-    <nav class="top-nav">
-      <a href="index.html" class="tab-link active">Posts</a>
-      <a href="app.html" class="tab-link">Apps</a>
-    </nav>
+  <!-- Tabs -->
+  <nav class="top-nav">
+    <a href="index.html" class="tab-link active">Posts</a>
+    <a href="app.html" class="tab-link">Apps</a>
+  </nav>
 
-    <!-- Search -->
-   
-
-  <div class="more-posts">
-    <a href="post.html" class="all-posts-link">
-      모든 포스트 보기 →
-    </a>
+  <!-- Search (중앙 고정) -->
+  <div class="search-area">
+    <div class="search">
+      <input id="search" type="text" placeholder="Search posts…" />
+    </div>
   </div>
-<div class="search-area">
-  <div class="search">
-    <input id="search" type="text" placeholder="Search posts…" />
-  </div>
-</div>
 
-
-<!-- Intro Toggle -->
-<div class="intro-wrapper">
-  <button id="introBtn" class="intro-toggle">
-    여긴 어떤 곳?
-  </button>
-
-  <section id="introPanel" class="intro-panel hidden">
-    <p>
-      이 블로그는 AI를 쓰되, 구조는 직접 이해하고 싶은 사람의 기록이다.<br><br>
-      개발자가 되기 위한 학습이 아니라,<br>
-      도구를 통제하는 감각을 만들기 위한 실험을 정리한다.
-    </p>
-  </section>
-</div>
-
-
-
-    <!-- POSTS LIST (JS가 채움) -->
-    <section id="posts">
-      <!-- JS render -->
+  <!-- Intro -->
+  <div class="intro-wrapper">
+    <button id="introBtn" class="intro-toggle">여긴 어떤 곳?</button>
+    <section id="introPanel" class="intro-panel hidden">
+      <p>
+        이 블로그는 AI를 쓰되, 구조는 직접 이해하고 싶은 사람의 기록이다.<br><br>
+        개발자가 되기 위한 학습이 아니라,<br>
+        도구를 통제하는 감각을 만들기 위한 실험을 정리한다.
+      </p>
     </section>
+  </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-      © <span id="year"></span> HYANG
-    </footer>
+  <!-- POSTS -->
+  <section id="posts"></section>
 
-  </main>
-<button id="scrollTopBtn" aria-label="Back to top">
-  ↑
-</button>
+  <footer class="footer">
+    © <span id="year"></span> HYANG
+  </footer>
 
-  <!-- =========================
-    Script
-  ========================= -->
-  <script src="assets/app.js"></script>
+</main>
+
+<button id="scrollTopBtn" aria-label="Back to top">↑</button>
+
+<script src="assets/app.js"></script>
 </body>
 </html>
-
 
 
 
