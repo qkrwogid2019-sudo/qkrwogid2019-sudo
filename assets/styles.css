@@ -93,9 +93,11 @@ a{
   font-size:15px;
 }
 .post-meta{
-  font-size:13px;
+  font-size:12px;
   opacity:.6;
   margin-bottom:6px;
+     letter-spacing:.02em;
+
 }
 
 /* =========================
@@ -130,6 +132,47 @@ a{
 #posts:not(.hidden),
 #apps:not(.hidden){
   animation:fadeUp .25s ease both;
+}
+
+/*==========================
+post left
+==============================*/
+
+.post-layout{
+  display:grid;
+  grid-template-columns:220px 1fr;
+  gap:32px;
+}
+.post-list{
+  position:sticky;
+  top:24px;
+  align-self:start;
+}
+
+
+.post-list{
+  font-size:14px;
+  opacity:.7;
+}
+
+.post-list a{
+  display:block;
+  padding:6px 0;
+}
+
+.post-list .active{
+  font-weight:600;
+  opacity:1;
+}
+
+/* 모바일 */
+@media (max-width: 800px){
+  .post-layout{
+    grid-template-columns:1fr;
+  }
+  .post-list{
+    display:none;
+  }
 }
 
 /* =========================
