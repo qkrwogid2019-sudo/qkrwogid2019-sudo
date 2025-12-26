@@ -193,16 +193,21 @@ function renderPostNav(posts, currentPost){
 
   if (prev){
     prevEl.href = `post.html?slug=${prev.slug}`;
-    prevEl.textContent = `← ${prev.title}`;
+    prevEl.innerHTML = `<span class="nav-icon">←</span> ${prev.title}`;
     prevEl.classList.remove("hidden");
+  } else {
+    prevEl.classList.add("hidden");
   }
 
   if (next){
     nextEl.href = `post.html?slug=${next.slug}`;
-    nextEl.textContent = `${next.title} →`;
+    nextEl.innerHTML = `${next.title} <span class="nav-icon">→</span>`;
     nextEl.classList.remove("hidden");
+  } else {
+    nextEl.classList.add("hidden");
   }
 }
+
 
 
 /* =========================
