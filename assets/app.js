@@ -35,7 +35,7 @@ async function mountIndex(){
   setYear();
 
   const postsEl = $("#posts");
-  if (!postsEl) return; // index가 아니면 종료
+  if (!postsEl) return;
 
   let posts;
   try {
@@ -45,9 +45,13 @@ async function mountIndex(){
     return;
   }
 
-  renderPosts(postsEl, posts);
-  bindSearch(postsEl, posts);
+  const latestPosts = posts.slice(0, 4);
+  renderPosts(postsEl, latestPosts);
+
+  bindSearch(postsEl, posts); // 검색은 전체 기준 유지
 }
+
+
 
 function renderPosts(container, posts){
   container.innerHTML = posts.map(p => `
