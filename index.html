@@ -3,46 +3,67 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tech – blog</title>
+  <title>TECH POST</title>
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Inter:wght@400;600&display=swap"
+    rel="stylesheet"
+  >
 
+  <!-- Styles -->
   <link rel="stylesheet" href="assets/styles.css" />
 </head>
 <body>
 
+  <!-- =========================
+    Header
+  ========================= -->
   <header class="site-header">
-    <span class="brand">T E C H T E C H T E C H 🤓</span>
-    <div class="header-icon"></div>
+    <span class="brand">T E C H P O S T</span>
   </header>
 
+  <!-- =========================
+    Main
+  ========================= -->
   <main class="container">
 
-     <div class="top-nav">
-  <a href="index.html" class="tab-link active">Posts</a>
-  <a href="app.html" class="tab-link">App</a>
-</div>
+    <!-- Tabs (페이지 이동 방식) -->
+    <nav class="top-nav">
+      <a href="index.html" class="tab-link active">Posts</a>
+      <a href="app.html" class="tab-link">Apps</a>
+    </nav>
 
+    <!-- Search -->
     <div class="search">
-      <input id="search" type="text" placeholder="Search…" />
+      <input
+        id="search"
+        type="text"
+        placeholder="Search posts…"
+      />
     </div>
 
-    <section id="posts"></section>
+    <!-- POSTS LIST (JS가 채움) -->
+    <section id="posts">
+      <!-- JS render -->
+    </section>
 
-   
-
+    <!-- Footer -->
     <footer class="footer">
       © <span id="year"></span> HYANG
     </footer>
 
   </main>
 
+  <!-- =========================
+    Script
+  ========================= -->
   <script src="assets/app.js"></script>
 </body>
 </html>
+
 
 
 
