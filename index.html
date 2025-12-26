@@ -48,17 +48,24 @@
   <a href="index.html">모든 포스트 보기 →</a>
 </div>
 
-<section class="intro">
-  <h1>이 블로그는 이런 곳이다</h1>
-  <p>
-    이 블로그는<br>
-    AI를 쓰되, 구조는 직접 이해하고 싶은 사람의 기록이다.
-  </p>
-  <p>
-    개발자가 되기 위한 학습이 아니라,<br>
-    도구를 통제하는 감각을 만들기 위한 실험을 정리한다.
-  </p>
-</section>
+<!-- Intro Toggle -->
+<div class="intro-toggle">
+  <button id="introBtn" aria-expanded="false">
+    ❔ <span>여긴 어떤 곳?</span>
+  </button>
+
+  <section id="introPanel" class="intro-panel hidden">
+    <p>
+      이 블로그는<br>
+      <strong>AI를 쓰되, 구조는 직접 이해하고 싶은 사람</strong>의 기록이다.
+    </p>
+    <p>
+      개발자가 되기 위한 학습이 아니라,<br>
+      <strong>도구를 통제하는 감각</strong>을 만들기 위한 실험을 정리한다.
+    </p>
+  </section>
+</div>
+
 
     <!-- POSTS LIST (JS가 채움) -->
     <section id="posts">
