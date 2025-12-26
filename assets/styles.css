@@ -10,12 +10,6 @@
   --line:#3b2bd6;
   --radius:14px;
 }
-.all-posts-link{
-  display: inline-block;
-  margin: 12px 0 24px;
-  font-weight: 600;
-  color: var(--primary);
-}
 
 /* =========================
    Base
@@ -62,6 +56,26 @@ a{
 }
 
 /* =========================
+   Archive Trigger (페이지 기준 왼쪽)
+========================= */
+.archive-trigger{
+  width:100%;
+  padding:0 24px;
+  margin:12px 0 8px;
+  text-align:left;
+}
+
+.all-posts-link{
+  display:inline-block;
+  font-weight:600;
+  color:var(--primary);
+}
+
+.all-posts-link:hover{
+  text-decoration:underline;
+}
+
+/* =========================
    Top Navigation
 ========================= */
 .top-nav{
@@ -86,7 +100,27 @@ a{
 }
 
 /* =========================
-   Intro (설명 박스)
+   Search (중앙)
+========================= */
+.search-area{
+  max-width:720px;
+  margin:0 auto 32px;
+}
+
+.search{
+  margin:0;
+}
+
+.search input{
+  width:100%;
+  padding:14px 18px;
+  border-radius:999px;
+  border:2px solid var(--line);
+  font-size:15px;
+}
+
+/* =========================
+   Intro
 ========================= */
 .intro-wrapper{
   margin-bottom:40px;
@@ -121,26 +155,10 @@ a{
 }
 
 /* =========================
-   Search
-========================= */
-.search{
-  max-width:720px;
-  margin:0 auto 24px;
-}
-
-.search input{
-  width:100%;
-  padding:14px 18px;
-  border-radius:999px;
-  border:2px solid var(--line);
-  font-size:15px;
-}
-
-/* =========================
-   Posts List
+   Posts List (기본 카드 모드)
 ========================= */
 #posts{
-  padding-top:8px; /* margin 병합 완전 차단 */
+  padding-top:8px;
 }
 
 .post-link{
@@ -158,6 +176,11 @@ a{
   margin-bottom:6px;
 }
 
+.post-title{
+  font-size:18px;
+  font-weight:600;
+}
+
 .tags{
   margin-top:10px;
   display:flex;
@@ -170,6 +193,31 @@ a{
   border-radius:999px;
   border:2px solid var(--line);
   font-size:13px;
+}
+
+/* =========================
+   Posts List (아카이브 텍스트 모드)
+========================= */
+#posts.list-mode .post-link{
+  background:none;
+  border:none;
+  padding:6px 0;
+  margin:0;
+}
+
+#posts.list-mode .post-meta,
+#posts.list-mode .tags{
+  display:none;
+}
+
+#posts.list-mode .post-title{
+  font-size:16px;
+  font-weight:600;
+  color:var(--primary);
+}
+
+#posts.list-mode .post-link:hover{
+  text-decoration:underline;
 }
 
 /* =========================
@@ -194,33 +242,6 @@ a{
   opacity:1;
   pointer-events:auto;
 }
-.all-posts-link{
-  display: inline-block;
-  margin: 4px 0 16px;
-  font-weight: 600;
-  color: var(--primary);
-}
-
-.all-posts-link:hover{
-  text-decoration: underline;
-}
-.search-area{
-  max-width:720px;
-  margin:0 auto 24px;
-}
-
-.search{
-  margin:0; /* 기존 중앙 정렬 제거 */
-}
-
-
-.more-posts.global{
-  width:100%;
-  padding:0 24px;
-  margin-bottom:16px;
-  text-align:left;
-}
-
 
 /* =========================
    Footer
