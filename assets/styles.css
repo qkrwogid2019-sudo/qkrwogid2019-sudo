@@ -173,9 +173,28 @@ article figcaption{
    Post Layout
 ========================= */
 
+/* Prev / Next navigation */
+.post-nav{
+  display:flex;
+  gap:16px;
+  margin-top:32px;
+}
+
 .nav-link{
   font-family: Inter, system-ui, -apple-system, sans-serif;
+  flex:1;
+  padding:14px 18px;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  background:#fff;
+  font-weight:600;
 }
+
+/* visibility control */
+.hidden{
+  display:none;
+}
+
 
 .post-layout{
   display:grid;
