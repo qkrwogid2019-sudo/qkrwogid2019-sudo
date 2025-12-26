@@ -211,12 +211,16 @@ function renderPostNav(posts, currentPost){
 
 
 /* =========================
-   BOOT
+   BOOT (FIXED)
 ========================= */
-if (location.pathname.endsWith("post.html")){
+const isPostPage = document.querySelector("#content");
+
+if (isPostPage){
   mountPost();
 } else {
   mountIndex();
+}
+
 }
 
 
