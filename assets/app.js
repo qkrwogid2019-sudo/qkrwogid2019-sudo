@@ -4,7 +4,7 @@
 const $ = (s) => document.querySelector(s);
 
 /* =========================
-   Fetch Utils (relative path only)
+   Fetch Utils
 ========================= */
 async function fetchJSON(path){
   const res = await fetch(path, { cache: "no-store" });
@@ -16,6 +16,14 @@ async function fetchText(path){
   const res = await fetch(path, { cache: "no-store" });
   if (!res.ok) throw new Error("HTML load failed: " + path);
   return res.text();
+}
+
+/* =========================
+   Shared
+========================= */
+function setYear(){
+  const year = $("#year");
+  if (year) year.textContent = new Date().getFullYear();
 }
 
 /* =========================
@@ -35,19 +43,12 @@ async function mountIndex(){
   bindTabs(postsEl);
 }
 
-/* ---- helpers (index) ---- */
-
-function setYear(){
-  const year = $("#year");
-  if (year) year.textContent = new Date().getFullYear();
-}
-
 async function loadPosts(container){
   try {
     return await fetchJSON("posts/posts.json");
   } catch (e) {
     console.error(e);
-    container.innerHTML = "<p>미안해.다음기회에 또 봐</p>";
+    container.innerHTML = "<p>미안해. 다음 기회에 또 봐</p>";
     return null;
   }
 }
@@ -114,7 +115,7 @@ async function mountPost(){
   const contentEl = $("#content");
 
   if (!slug || !titleEl || !contentEl){
-    if (contentEl) contentEl.innerHTML = "<p>잘못찾아왔어</p>";
+    if (contentEl) contentEl.innerHTML = "<p>잘못 찾아왔어</p>";
     return;
   }
 
@@ -122,7 +123,7 @@ async function mountPost(){
   try {
     posts = await fetchJSON("posts/posts.json");
   } catch {
-    contentEl.innerHTML = "<p>앗.오류야</p>";
+    contentEl.innerHTML = "<p>앗, 오류야</p>";
     return;
   }
 
@@ -137,13 +138,15 @@ async function mountPost(){
   try {
     contentEl.innerHTML = await fetchText(`posts/${post.file}`);
   } catch {
-    contentEl.innerHTML = "<p>앗 오류야</p>";
+    contentEl.innerHTML = "<p>앗, 오류야</p>";
   }
+
+  renderPostNav(posts, post);
 
   if (window.hljs) hljs.highlightAll();
 }
-renderPostNav(posts, post);
 
+/* ---- Post Navigation ---- */
 function renderPostNav(posts, currentPost){
   const prevEl = $("#prev-post");
   const nextEl = $("#next-post");
@@ -176,6 +179,7 @@ if (location.pathname.endsWith("post.html")){
 } else {
   mountIndex();
 }
+
 
 
 
