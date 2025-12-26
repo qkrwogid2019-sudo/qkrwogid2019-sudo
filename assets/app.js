@@ -89,6 +89,12 @@ function bindTabs(postsEl){
 
   if (!tabPosts || !tabApp || !appsEl) return;
 
+  // ✅ 초기 상태 강제
+  postsEl.classList.remove("hidden");
+  appsEl.classList.add("hidden");
+  tabPosts.classList.add("active");
+  tabApp.classList.remove("active");
+
   tabPosts.onclick = () => {
     appsEl.classList.add("hidden");
     postsEl.classList.remove("hidden");
@@ -103,6 +109,7 @@ function bindTabs(postsEl){
     tabPosts.classList.remove("active");
   };
 }
+
 
 /* =========================
    POST
