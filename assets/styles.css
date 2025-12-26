@@ -10,6 +10,16 @@
   --line:#3b2bd6;
   --radius:14px;
 }
+.intro{
+  background:#fff;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  padding:24px;
+  margin-bottom:32px;
+}
+.intro p{
+  line-height:1.6;
+}
 
 /* =========================
    Base
