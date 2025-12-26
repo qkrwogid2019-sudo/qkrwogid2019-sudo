@@ -1,0 +1,50 @@
+<!-- posts/example.html -->
+
+<section class="post-body">
+
+  <h2>문제 상황</h2>
+  <p>
+    Posts / App 탭 전환 시,
+    App 영역이 Posts 하단에 붙어서 나타났다.
+  </p>
+
+  <h2>처음 세운 가설</h2>
+  <ul>
+    <li>CSS transition 문제일 것 같다</li>
+    <li>GitHub Pages 캐시 문제일 수도 있다</li>
+  </ul>
+
+  <h2>문제가 된 코드</h2>
+  <pre><code class="language-css">
+.hidden{
+  opacity:0;
+}
+  </code></pre>
+
+  <h2>진짜 원인</h2>
+  <p>
+    <code>opacity:0</code>은 요소를 보이지 않게 할 뿐,
+    레이아웃에서는 제거하지 않는다.
+  </p>
+
+  <h2>해결 방법</h2>
+  <pre><code class="language-css">
+.hidden{
+  display:none;
+}
+  </code></pre>
+
+  <h2>배운 점</h2>
+  <ul>
+    <li>탭 UI에서는 display 상태를 명확히 관리해야 한다</li>
+    <li>애니메이션은 상태 관리 수단이 아니다</li>
+  </ul>
+
+  <hr />
+
+  <p class="post-note">
+    이 글은 실제 삽질 과정을 그대로 기록한 복기 노트다.
+    오늘 이거 잡느라 1시간 날림.
+  </p>
+
+</section>
