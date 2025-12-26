@@ -10,6 +10,12 @@
   --line:#3b2bd6;
   --radius:14px;
 }
+.all-posts-link{
+  display: inline-block;
+  margin: 12px 0 24px;
+  font-weight: 600;
+  color: var(--primary);
+}
 
 /* =========================
    Base
