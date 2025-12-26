@@ -15,41 +15,31 @@
    Intro Toggle
 ========================= */
 .intro-toggle{
-  max-width:720px;
-  margin:0 auto 24px;
-}
-
-.intro-toggle button{
-  display:flex;
+  display:inline-flex;
   align-items:center;
   gap:8px;
-  background:none;
-  border:none;
-  font-size:14px;
-  opacity:.6;
+
+  padding:6px 12px;
+  border:2px solid var(--line);
+  border-radius:999px;
+  background:#fff;
+
+  font-size:13px;
   cursor:pointer;
-  padding:4px 0;
 }
 
-.intro-toggle button:hover{
-  opacity:1;
+.intro{
+  margin-top:16px;
+  padding:16px;
+  border:2px solid var(--line);
+  border-radius:var(--radius);
+  background:#fff;
 }
 
-/* Panel */
-.intro-panel{
-  margin-top:12px;
-  padding:16px 20px;
-  border-left:3px solid var(--line);
-  background:rgba(255,255,255,.6);
-  font-size:14px;
-  line-height:1.6;
-
-  animation:fadeUp .25s ease both;
-}
-
-.intro-panel.hidden{
+.hidden{
   display:none;
 }
+
 
 .intro{
   background:#fff;
