@@ -4,17 +4,17 @@
 const $ = (s) => document.querySelector(s);
 
 /* =========================
-   Fetch Utils
+   Fetch
 ========================= */
 async function fetchJSON(path){
   const res = await fetch(path, { cache: "no-store" });
-  if (!res.ok) throw new Error("JSON load failed: " + path);
+  if (!res.ok) throw new Error(path);
   return res.json();
 }
 
 async function fetchText(path){
   const res = await fetch(path, { cache: "no-store" });
-  if (!res.ok) throw new Error("HTML load failed: " + path);
+  if (!res.ok) throw new Error(path);
   return res.text();
 }
 
@@ -27,41 +27,30 @@ function setYear(){
 }
 
 /* =========================
-   INDEX
+   INDEX PAGE
 ========================= */
 async function mountIndex(){
   setYear();
 
   const postsEl = $("#posts");
-  if (!postsEl) return;
+  if (!postsEl) return; // index가 아니면 종료
 
-  const posts = await loadPosts(postsEl);
-  if (!posts) return;
+  let posts;
+  try {
+    posts = await fetchJSON("posts/posts.json");
+  } catch {
+    postsEl.innerHTML = "<p>포스트를 불러오지 못했어</p>";
+    return;
+  }
 
   renderPosts(postsEl, posts);
   bindSearch(postsEl, posts);
-  bindTabs(postsEl);
 }
 
-async function loadPosts(container){
-  try {
-    return await fetchJSON("posts/posts.json");
-  } catch (e) {
-    console.error(e);
-    container.innerHTML = "<p>미안해. 다음 기회에 또 봐</p>";
-    return null;
-  }
-}
-
-function formatDate(dateStr){
-  const d = new Date(dateStr);
-  return `${d.getFullYear()}.${d.getMonth()+1}.${d.getDate()}`;
-}
-
-function renderPosts(container, list){
-  container.innerHTML = list.map(p => `
+function renderPosts(container, posts){
+  container.innerHTML = posts.map(p => `
     <a class="post-link" href="post.html?slug=${p.slug}">
-      <div class="post-meta">${formatDate(p.date)}</div>
+      ${p.date ? `<div class="post-meta">${p.date}</div>` : ""}
       <h2>${p.title}</h2>
       <p>${p.summary}</p>
       <div class="tags">
@@ -70,6 +59,7 @@ function renderPosts(container, list){
     </a>
   `).join("");
 }
+
 function bindSearch(container, posts){
   const search = $("#search");
   if (!search) return;
@@ -87,37 +77,8 @@ function bindSearch(container, posts){
   });
 }
 
-function bindTabs(postsEl){
-  const tabPosts = $("#tab-posts");
-  const tabApp   = $("#tab-app");
-  const appsEl   = $("#apps");
-
-  if (!tabPosts || !tabApp || !appsEl) return;
-
-  // ✅ 초기 상태 강제
-  postsEl.classList.remove("hidden");
-  appsEl.classList.add("hidden");
-  tabPosts.classList.add("active");
-  tabApp.classList.remove("active");
-
-  tabPosts.onclick = () => {
-    appsEl.classList.add("hidden");
-    postsEl.classList.remove("hidden");
-    tabPosts.classList.add("active");
-    tabApp.classList.remove("active");
-  };
-
-  tabApp.onclick = () => {
-    postsEl.classList.add("hidden");
-    appsEl.classList.remove("hidden");
-    tabApp.classList.add("active");
-    tabPosts.classList.remove("active");
-  };
-}
-
-
 /* =========================
-   POST
+   POST PAGE
 ========================= */
 async function mountPost(){
   setYear();
@@ -126,101 +87,78 @@ async function mountPost(){
   const titleEl = $("#title");
   const contentEl = $("#content");
 
-  if (!slug || !titleEl || !contentEl){
-    if (contentEl) contentEl.innerHTML = "<p>잘못 찾아왔어</p>";
-    return;
-  }
+  if (!slug || !titleEl || !contentEl) return;
 
   let posts;
   try {
     posts = await fetchJSON("posts/posts.json");
   } catch {
-    contentEl.innerHTML = "<p>앗, 오류야</p>";
+    contentEl.innerHTML = "<p>글 목록을 불러오지 못했어</p>";
     return;
   }
 
   const post = posts.find(p => p.slug === slug);
   if (!post){
-    contentEl.innerHTML = "<p>텅 비었어</p>";
+    contentEl.innerHTML = "<p>글이 없어</p>";
     return;
   }
 
   titleEl.textContent = post.title;
 
-  // ✅ 좌측 목록
-  renderSideList(posts, post);
-
   try {
     contentEl.innerHTML = await fetchText(`posts/${post.file}`);
   } catch {
-    contentEl.innerHTML = "<p>앗, 오류야</p>";
+    contentEl.innerHTML = "<p>본문을 불러오지 못했어</p>";
   }
 
-  // ✅ 이전 / 다음 글
+  renderSideList(posts, post);
   renderPostNav(posts, post);
-
-  if (window.hljs) hljs.highlightAll();
 }
 
-/* =========================
-   Side List
-========================= */
-function renderSideList(posts, currentPost){
+/* 좌측 글 목록 */
+function renderSideList(posts, current){
   const listEl = document.querySelector(".post-list");
   if (!listEl) return;
 
   listEl.innerHTML = posts.map(p => `
     <a href="post.html?slug=${p.slug}"
-       class="${p.slug === currentPost.slug ? "active" : ""}">
+       class="${p.slug === current.slug ? "active" : ""}">
       ${p.title}
     </a>
   `).join("");
 }
 
-/* =========================
-   Post Navigation
-========================= */
-function renderPostNav(posts, currentPost){
+/* 이전 / 다음 */
+function renderPostNav(posts, current){
   const prevEl = $("#prev-post");
   const nextEl = $("#next-post");
-
   if (!prevEl || !nextEl) return;
 
-  const index = posts.findIndex(p => p.slug === currentPost.slug);
+  const index = posts.findIndex(p => p.slug === current.slug);
 
   const prev = posts[index - 1];
   const next = posts[index + 1];
 
   if (prev){
     prevEl.href = `post.html?slug=${prev.slug}`;
-    prevEl.innerHTML = `<span class="nav-icon">←</span> ${prev.title}`;
+    prevEl.textContent = `← ${prev.title}`;
     prevEl.classList.remove("hidden");
-  } else {
-    prevEl.classList.add("hidden");
   }
 
   if (next){
     nextEl.href = `post.html?slug=${next.slug}`;
-    nextEl.innerHTML = `${next.title} <span class="nav-icon">→</span>`;
+    nextEl.textContent = `${next.title} →`;
     nextEl.classList.remove("hidden");
-  } else {
-    nextEl.classList.add("hidden");
   }
 }
 
-
-
 /* =========================
-   BOOT (FIXED)
+   BOOT (중요)
 ========================= */
-const isPostPage = document.querySelector("#content");
-
-if (isPostPage){
+if (location.pathname.endsWith("post.html")){
   mountPost();
 } else {
   mountIndex();
-}
-
 }
 
 
