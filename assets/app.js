@@ -45,20 +45,29 @@ async function mountIndex(){
     return;
   }
 
+  // 기본: 최신 4개 카드
   const latestPosts = posts.slice(0, 4);
-  renderPosts(postsEl, latestPosts);
+  renderPosts(postsEl, latestPosts, false);
 
-  bindSearch(postsEl, posts); // 검색은 전체 기준 유지
+  bindSearch(postsEl, posts);
+  bindArchiveToggle(postsEl, posts);
 }
 
+/* =========================
+   Render
+========================= */
+function renderPosts(container, posts, listMode){
+  if (listMode){
+    container.classList.add("list-mode");
+  } else {
+    container.classList.remove("list-mode");
+  }
 
-
-function renderPosts(container, posts){
   container.innerHTML = posts.map(p => `
     <a class="post-link" href="post.html?slug=${p.slug}">
       ${p.date ? `<div class="post-meta">${p.date}</div>` : ""}
-      <h2>${p.title}</h2>
-      <p>${p.summary}</p>
+      <h2 class="post-title">${p.title}</h2>
+      ${p.summary ? `<p>${p.summary}</p>` : ""}
       <div class="tags">
         ${(p.tags || []).map(t => `<span class="tag">${t}</span>`).join("")}
       </div>
@@ -66,20 +75,37 @@ function renderPosts(container, posts){
   `).join("");
 }
 
+/* =========================
+   Search (항상 전체 기준)
+========================= */
 function bindSearch(container, posts){
   const search = $("#search");
   if (!search) return;
 
   search.addEventListener("input", e => {
     const q = e.target.value.toLowerCase();
-    renderPosts(
-      container,
-      posts.filter(p =>
-        p.title.toLowerCase().includes(q) ||
-        p.summary.toLowerCase().includes(q) ||
-        (p.tags || []).some(t => t.toLowerCase().includes(q))
-      )
+
+    const filtered = posts.filter(p =>
+      p.title.toLowerCase().includes(q) ||
+      (p.summary || "").toLowerCase().includes(q) ||
+      (p.tags || []).some(t => t.toLowerCase().includes(q))
     );
+
+    renderPosts(container, filtered, false);
+  });
+}
+
+/* =========================
+   Archive (텍스트 리스트 모드)
+========================= */
+function bindArchiveToggle(container, posts){
+  const btn = $("#allPostsBtn");
+  if (!btn) return;
+
+  btn.addEventListener("click", e => {
+    e.preventDefault();
+    renderPosts(container, posts, true);
+    container.scrollIntoView({ behavior: "smooth" });
   });
 }
 
@@ -121,7 +147,9 @@ async function mountPost(){
   renderPostNav(posts, post);
 }
 
-/* 좌측 글 목록 */
+/* =========================
+   Post Side List
+========================= */
 function renderSideList(posts, current){
   const listEl = document.querySelector(".post-list");
   if (!listEl) return;
@@ -134,7 +162,9 @@ function renderSideList(posts, current){
   `).join("");
 }
 
-/* 이전 / 다음 */
+/* =========================
+   Prev / Next Nav
+========================= */
 function renderPostNav(posts, current){
   const prevEl = $("#prev-post");
   const nextEl = $("#next-post");
@@ -157,39 +187,38 @@ function renderPostNav(posts, current){
     nextEl.classList.remove("hidden");
   }
 }
-console.log("🔥 mountIndex 실행");
+
+/* =========================
+   Scroll To Top
+========================= */
 const scrollTopBtn = document.querySelector("#scrollTopBtn");
 
-if (scrollTopBtn) {
+if (scrollTopBtn){
   window.addEventListener("scroll", () => {
-    if (window.scrollY > 300) {
-      scrollTopBtn.classList.add("show");
-    } else {
-      scrollTopBtn.classList.remove("show");
-    }
+    scrollTopBtn.classList.toggle("show", window.scrollY > 300);
   });
 
   scrollTopBtn.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
+
+/* =========================
+   Intro Toggle
+========================= */
 const introBtn = document.querySelector("#introBtn");
 const introPanel = document.querySelector("#introPanel");
 
-if (introBtn && introPanel) {
+if (introBtn && introPanel){
   introBtn.addEventListener("click", () => {
     const isOpen = !introPanel.classList.contains("hidden");
-
     introPanel.classList.toggle("hidden");
     introBtn.setAttribute("aria-expanded", String(!isOpen));
   });
 }
 
 /* =========================
-   BOOT (중요)
+   BOOT
 ========================= */
 if (location.pathname.endsWith("post.html")){
   mountPost();
