@@ -288,6 +288,36 @@ pre{
 .hidden{
   display:none;
 }
+/* =========================
+   Scroll To Top Button
+========================= */
+#scrollTopBtn{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  border:2px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  font-size:18px;
+  font-weight:600;
+  cursor:pointer;
+
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .2s ease, transform .2s ease;
+}
+
+#scrollTopBtn.show{
+  opacity:1;
+  pointer-events:auto;
+}
+
+#scrollTopBtn:hover{
+  transform:translateY(-3px);
+}
 
 /* =========================
    Footer
