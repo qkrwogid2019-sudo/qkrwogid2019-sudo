@@ -185,15 +185,17 @@ article{
 #posts,
 #apps{
   opacity:1;
-  pointer-events:auto;
+  height:auto;
   transition:opacity .25s ease;
 }
+
 
 .hidden{
   opacity:0;
   pointer-events:none;
+  height:0;
+  overflow:hidden;
 }
-
 
 
 /* =========================
