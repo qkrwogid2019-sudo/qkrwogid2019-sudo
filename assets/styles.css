@@ -55,14 +55,16 @@ a{
   font-size:28px;
   display:inline-block;
 }
-article img{
-  max-width:500px;   /* ← 핵심 */
-  width:100%;
-  height:auto;
-  margin:24px auto;
+#content img,
+#content figure,
+#content figure img{
+  max-width:720px !important;
+  width:100% !important;
+  height:auto !important;
   display:block;
-  border-radius:12px;
+  margin:24px auto;
 }
+
 
 
 /* =========================
