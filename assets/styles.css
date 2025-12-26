@@ -56,7 +56,7 @@ a{
   display:inline-block;
 }
 article img{
-  max-width:720px;   /* ← 핵심 */
+  max-width:500px;   /* ← 핵심 */
   width:100%;
   height:auto;
   margin:24px auto;
